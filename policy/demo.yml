@@ -1,0 +1,14 @@
+- !policy
+  id: demo
+  annotations:
+    description: policy for demo of storing & fetching secrets using Conjur
+  body:
+    - !layer
+    - !host_factory
+      layers: [ !layer ]
+    - !variable secret
+    - !permit
+      resource: !variable secret
+      privilege: [ read, execute ]
+      role: !layer
+
