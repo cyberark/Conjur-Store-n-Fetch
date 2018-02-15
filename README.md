@@ -16,11 +16,13 @@ workflows:
 
 This tutorial has a few prerequisites. They are:
 
-1. a terminal application. [Hyper](https://hyper.is/) is a nice one.
-2. the Docker CE package. Visit the [Docker website][docker-ce] and scroll down
-   to find the download for your operating system.
+1. A terminal application. [Hyper](https://hyper.is/) is a nice one
+2. The Docker CE package. Visit the [Docker website][docker-ce] and scroll down
+   to find the download for your operating system
+3. The JSON query tool `jq`, [available here][jq]
 
 [docker-ce]: https://www.docker.com/community-edition
+[jq]: https://stedolan.github.io/jq/download/
 
 ## Getting Started
 
