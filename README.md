@@ -107,13 +107,14 @@ rm -f json/* data_key test.out
 
 Next we'll need to generate a master data key to encrypt our secrets at rest:
 
+*Prevent data loss:* move this key to a safe place before deploying in
+production!
+
 ###### Generate a data key
 ```bash
 # Generate a data key for Conjur encryption of data at rest.
-# *** Prevent data loss: ***
-# Move this key to a safe place before deploying in production!
 docker-compose run --no-deps --rm conjur data-key generate > data_key
-export CONJUR_DATA_KEY="$(< data_key)"
+export CONJUR_DATA_KEY="$(cat data_key)"
 ```
 
 Now we're ready to start the Conjur server:
