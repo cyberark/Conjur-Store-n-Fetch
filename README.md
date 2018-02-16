@@ -255,11 +255,70 @@ machine identity is not authorized by the policy to do so.
 docker-compose exec client conjur variable values add demo/secret $(uuidgen)
 ```
 
+---
 
 ## Addendum: files and scripts
 
-You can generate all the files and scripts used in this guide from this
-documentation.
+Using `dev.sh` you can generate all the files and scripts as described in this
+guide. It uses the Markdown source of this README and pieces it together to
+create the files. That makes this a _literate guide_ in the sense of literate
+programming.
+
+Example:
+
+```sh-session
+bash-3.2$ git clone git@github.com:ryanprior/Conjur-Store-n-Fetch.git
+Cloning into 'Conjur-Store-n-Fetch'...
+remote: Counting objects: 31, done.        
+remote: Compressing objects: 100% (21/21), done.        
+remote: Total 31 (delta 5), reused 31 (delta 5), pack-reused 0        
+Receiving objects: 100% (31/31), 7.45 KiB | 149.00 KiB/s, done.
+Resolving deltas: 100% (5/5), done.
+bash-3.2$ cd Conjur-Store-n-Fetch/
+bash-3.2$ ./dev.sh
+Knot writing file: ./create-host.sh
+Knot writing file: ./docker-compose.yml
+Knot writing file: ./fetch-secret.sh
+Knot writing file: ./load-policy.sh
+Knot writing file: ./login-as-admin.sh
+Knot writing file: ./login-as-host.sh
+Knot writing file: ./policy/demo.yml
+Knot writing file: ./start.sh
+Knot writing file: ./store-secret.sh
+bash-3.2$ ./start.sh
+Pulling database (postgres:9.3)...
+9.3: Pulling from library/postgres
+Digest: sha256:1ea4216d3f91122a12f4fde5eb4de54865d93f914e843dc0f99597ca8b9b47da
+Status: Image is up to date for postgres:9.3
+Pulling conjur (cyberark/conjur:latest)...
+latest: Pulling from cyberark/conjur
+Digest: sha256:80a59c143422474ebefa276e89ac12933c84519a0f3d4c283bd596e0dd3d42c6
+Status: Image is up to date for cyberark/conjur:latest
+Pulling client (conjurinc/cli5:latest)...
+latest: Pulling from conjurinc/cli5
+Digest: sha256:d7e2cefd664a847f4a2d28eb843b9630ca633727b6de0f0cc3d71fa0f6d74b76
+Status: Image is up to date for conjurinc/cli5:latest
+Stopping conjurstorenfetch_client_1   ... 
+Stopping conjurstorenfetch_conjur_1   ... 
+Stopping conjurstorenfetch_database_1 ... 
+Removing conjurstorenfetch_client_1   ... 
+Removing conjurstorenfetch_conjur_1   ... 
+Removing conjurstorenfetch_database_1 ... 
+Removing network conjurstorenfetch_default
+Creating network "conjurstorenfetch_default" with the default driver
+Creating conjurstorenfetch_database_1 ... 
+Creating conjurstorenfetch_conjur_1   ... 
+Creating conjurstorenfetch_client_1   ... 
+Waiting for Conjur to be ready...
+.... Conjur is ready!
+Created new account account 'test'
+Token-Signing Public Key: -----BEGIN PUBLIC KEY-----
+[[ a public key was here ]]
+-----END PUBLIC KEY-----
+API key for admin: [[ an api key was here ]]
+Wrote configuration to /root/.conjurrc
+bash-3.2$
+```
 
 ###### file:start.sh
 ```bash
