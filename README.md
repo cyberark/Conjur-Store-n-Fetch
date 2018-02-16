@@ -214,14 +214,14 @@ docker-compose exec client conjur variable value demo/secret
 ### Create a machine identity
 ###### Create a hostfactory token
 ```bash
-docker-compose exec client conjur hostfactory tokens create demo >json/token
+docker-compose exec client conjur hostfactory tokens create demo | tee json/token
 token=$(jq -r .[].token json/token | tr -d '\n\r')
 echo "created a host factory token: $token"
 ```
 
 ###### Use hostfactory token to create a host
 ```bash
-docker-compose exec client conjur hostfactory hosts create $token demo-host >json/host
+docker-compose exec client conjur hostfactory hosts create $token demo-host | tee json/host
 ```
 
 ###### Revoke a hostfactory token
