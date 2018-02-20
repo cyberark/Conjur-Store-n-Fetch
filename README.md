@@ -25,12 +25,11 @@ This tutorial has a few prerequisites. They are:
 
 ## Getting Started
 
-Docker makes it easy to install the Conjur software by using "images," which
-offer service-level packages for the components that Conjur needs to run. We've
-extended by creating a Docker image for Conjur.
+Docker makes it easy to install the Conjur software. You tell it what services
+you want, and it pretty much handles the rest.
 
 The first thing you'll want to do is create a folder, then save the following
-inside it as `docker-compose.yml`.
+inside it as `docker-compose.yml`
 
 ###### file:docker-compose.yml
 ```yaml
@@ -58,7 +57,7 @@ services:
 
 ```
 
-### Services
+### Overview of the services
 
 Conjur uses a standard Postgres database. This can be self-hosted or managed by
 a cloud provider like Amazon RDS. For now we'll host locally using Docker.
