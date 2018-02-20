@@ -1,4 +1,5 @@
-/test.out
+/account.out
 /data_key
-json/*
-policy/*
+/host.json
+/token.json
+*.DS_Store
