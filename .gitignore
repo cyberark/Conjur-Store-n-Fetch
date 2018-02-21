@@ -3,6 +3,7 @@
 /host.json
 /token.json
 *.DS_Store
+/dist/*
 /create-host.sh
 /docker-compose.yml
 /fetch-secret.sh
