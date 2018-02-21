@@ -58,6 +58,9 @@ services:
 
 ```
 
+_(you can download the file from here:
+https://raw.githubusercontent.com/ryanprior/Conjur-Store-n-Fetch/master/dist/docker-compose.yml)_
+
 ### Overview of the services
 
 Conjur uses a standard Postgres database. This can be self-hosted or managed by
@@ -207,7 +210,7 @@ According to this policy, only the Conjur admin should be able to update the
 value of our secret, but all the hosts in our layer should be able to read it.
 As we go, we'll test to make sure this is true.
 
-Here's the policy file we'll load:
+Here's the policy file we'll load. Save it as `store-n-fetch.yml`
 
 ###### file:store-n-fetch.yml
 ```yaml
@@ -226,6 +229,9 @@ Here's the policy file we'll load:
       role: !layer
 
 ```
+
+_(you can download the file from here:
+https://raw.githubusercontent.com/ryanprior/Conjur-Store-n-Fetch/master/dist/store-n-fetch.yml)_
 
 Here's how to load it into Conjur:
 
