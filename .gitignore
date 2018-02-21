@@ -3,3 +3,12 @@
 /host.json
 /token.json
 *.DS_Store
+/create-host.sh
+/docker-compose.yml
+/fetch-secret.sh
+/load-policy.sh
+/login-as-admin.sh
+/login-as-host.sh
+/start.sh
+/store-n-fetch.yml
+/store-secret.sh

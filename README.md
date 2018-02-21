@@ -1,6 +1,7 @@
 # Conjur Store'n'Fetch
 
-A walkthrough of Conjur.org installation and core secrets workflows.
+A walkthrough of [Conjur.org](https://www.conjur.org) installation and core
+secrets workflows.
 
 ## Overview
 
@@ -65,7 +66,9 @@ a cloud provider like Amazon RDS. For now we'll host locally using Docker.
 The Conjur service itself uses an image automatically published by CyberArk from
 the latest builds of our open source project. It depends on the database service
 for storage, and it needs a data key from the environment which it will use to
-encrypt secrets at rest.
+[encrypt secrets at rest][conjur-encryption].
+
+[conjur-encryption]: https://www.conjur.org/reference/cryptography.html
 
 The client service is not necessary to run Conjur, but it's convenient for
 learning. It has the Conjur command-line tool pre-installed, plus other useful
@@ -99,7 +102,8 @@ docker-compose down
 rm -f token.json host.json data_key account.out
 ```
 
-Next we'll need to generate a master data key to encrypt our secrets at rest:
+Next we'll need to generate a master data key to [encrypt our secrets at
+rest][conjur-encryption]:
 
 *Prevent data loss:* move this key to a safe place before deploying in
 production!
@@ -141,7 +145,8 @@ Now that we've finished those steps, let's review progress. We have:
 * downloaded all the necessary software to run a Postgres database, Conjur
   server, and Conjur client
 * configured those services to run in a set of Docker containers
-* generated a data key for Conjur to encrypt secrets at rest
+* generated a data key for Conjur to [encrypt secrets at
+  rest][conjur-encryption]
 * initialized a Conjur server and Conjur account
 
 ## Logging in as Admin & vaulting a secret
@@ -233,11 +238,16 @@ The subcommand `policy load root` means that we're loading this policy at the
 root level (top-most part of the hierarchy) of Conjur. For more complicated
 workloads, you can create nested policies, but we won't use that feature yet.
 
+_For more about Conjur's policy format and the philosophy beind it, visit
+[Reference - Policies][conjur-policy]._
+
+[conjur-policy]: https://www.conjur.org/reference/policy.html
+
 ### Vault a secret
 
 Now, seeing as we're logged in as admin, let's "vault" a secret by storing it in
-a Conjur variable. Vaulted secrets are automatically secured by encrypting them
-with the data key.
+a Conjur variable. Vaulted secrets are automatically secured by [encrypting them
+with the data key][conjur-encryption].
 
 The command `openssl rand` creates a random string, which is a good option for a
 secret to be used by machines.
