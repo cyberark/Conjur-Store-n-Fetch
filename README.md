@@ -59,7 +59,7 @@ services:
 ```
 
 _(you can download the file from here:
-https://raw.githubusercontent.com/ryanprior/Conjur-Store-n-Fetch/master/dist/docker-compose.yml)_
+https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/v1-pre/docker-compose.yml)_
 
 ### Overview of the services
 
@@ -231,7 +231,7 @@ Here's the policy file we'll load. Save it as `store-n-fetch.yml`
 ```
 
 _(you can download the file from here:
-https://raw.githubusercontent.com/ryanprior/Conjur-Store-n-Fetch/master/dist/store-n-fetch.yml)_
+https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/v1-pre/store-n-fetch.yml)_
 
 Here's how to load it into Conjur:
 
