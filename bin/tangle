@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+while getopts wf: OPT; do
+    case $OPT in
+        w)
+            watch='true';;
+        f)
+            KNOT_FILES="$KNOT_FILES $OPTARG";;
+    esac
+done
+
+if [[ -z "$KNOT_FILES" ]]; then
+    KNOT_FILES='README.md'
+fi
+
+function tangle() {
+    docker run --rm -v "$(pwd):/workdir" mqsoh/knot "$KNOT_FILES" | tr -d '\r' | tee knot.out
+    perl -n -e'/Knot writing file: (.*)/ && print "$1 "' <knot.out >.knot_files
+    rm knot.out
+    chmod +x bin/*
+}
+
+if [[ $watch == 'true' ]]; then
+    echo "Watching: $KNOT_FILES"
+    watch_args="$(printf -- '-f %s ' $KNOT_FILES)"
+    tangle
+    fswatch -o $KNOT_FILES | xargs -n1 $0 $watch_args
+else
+    tangle
+fi
