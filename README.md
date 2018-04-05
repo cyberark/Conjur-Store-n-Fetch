@@ -122,7 +122,10 @@ _For more about Conjur's policy format and the philosophy beind it, visit
 ### Vault a secret
 
 Now let's vault a secret into the variable. Vaulted secrets are automatically
-secured by [encrypting them at rest and in transit][conjur-encryption].
+secured by encrypting them at rest and in transit. See also: [Reference -
+Cryptography][conjur-crypto].
+
+[conjur-crypto]: https://www.conjur.org/reference/cryptography.html
 
 Usually your secret will be something like an API key. Let's create our own fake
 faux-API key: the command `openssl rand` creates a random string like.
