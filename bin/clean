@@ -1,0 +1,6 @@
+#!/bin/bash
+set -eux
+
+touch .knot_files
+cat .knot_files .test_files | xargs rm -f
+rm -f .knot_files *.pem

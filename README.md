@@ -108,8 +108,8 @@ Here's how to load it into Conjur:
 docker-compose run conjur policy load root one-variable.yml
 ```
 
-The subcommand `policy load root` means that we're loading this policy at the
-root level of the account, [like the root of a tree][policy-as-tree]. For more
+The command `policy load root` means that we're loading this policy at the root
+level of the account, [like the root of a tree][policy-as-tree]. For more
 complicated workloads, you can create nested policies, but we won't use that
 feature yet.
 
@@ -132,7 +132,7 @@ faux-API key: the command `openssl rand` creates a random string like.
 
 ###### Add a value to a secret
 ```bash
-secret=$(docker-compose run --entrypoint openssl conjur rand -hex 12)
+secret=$(docker-compose run --entrypoint openssl conjur rand -hex 12 | tr -d '\r\n')
 docker-compose run conjur variable values add eval/secret ${secret}
 ```
 
@@ -179,25 +179,52 @@ folder. Then let's load it:
 
 ###### Load variable+host policy
 ```bash
-docker-compose run conjur policy load root variable-and-host.yml | tee host.json
+docker-compose run -T conjur policy load root variable-and-host.yml | tee roles.json
 ```
+
+*Note: the `-T` argument is needed to prevent the "Loaded policy" message from
+getting folded into our JSON output.*
 
 ### Authenticate using a machine identity (instead of admin)
 
 When you loaded that policy, you got a response with an ID and API key. This is
-the data a machine needs to prove its identity. It's now saved as `host.json`.
+the data a machine needs to prove its identity. It's now saved as `roles.json`.
 
 ###### Retrieve the host's API key
 ```bash
-api_key=$(jq -r .api_key host.json | tr -d '\r\n')
+api_key=$(jq -r '.created_roles | .[].api_key' roles.json | tr -d '\r\n')
 ```
 
 *Or you can just type `api_key=` and copy-paste the "api-key" data from the
 response. But smooth `bash` one-liners make you a code witch. You know.*
 
+**What if I don't get any `created_roles`?**
+
+If you load the `variable-and-host.yml` policy a second time, you'll get a
+response like this:
+
+```json
+{
+  "created_roles": {},
+  "version": 2
+}
+```
+
+This is because policy loads are idempotent in Conjur. You can load the same
+policy multiple times and it won't change the state of the system.
+
+If you're going through this flow a second time and want to get the host's API
+key, you can rotate it like so:
+
+```
+api_key=$(docker-compose run conjur host rotate_api_key -h eval/machine | tr -d '\r\n')
+```
+
+Now that you have the host's API key, you can assume its identity:
+
 ###### Login as host
 ```bash
-conjur authn login -u host/eval/machine -p ${api_key}
+docker-compose run conjur authn login -u host/eval/machine -p ${api_key}
 ```
 
 Now you're acting as the host.
@@ -218,9 +245,13 @@ response because the machine is not authorized by the policy to do so:
 
 ###### Attempt to modify the secret
 ```bash
-secret=$(docker-compose run --entrypoint openssl conjur rand -hex 12)
-conjur variable values add store-n-fetch/secret ${secret}
+secret=$(docker-compose run --entrypoint openssl conjur rand -hex 12 | tr -d '\r\n')
+conjur variable values add eval/secret ${secret}
 ```
+
+Instead of a "Value added" message, you'll get `error: 403 Forbidden`. This
+means that the security policy is working as intended: only the admin can change
+`eval/secret`, but the `eval/machine` host can fetch it.
 
 ---
 
@@ -234,10 +265,12 @@ programming.
 ###### file:bin/start
 ```bash
 #!/usr/bin/env bash
-set -eux
+set -eu
 
-echo 'Enter your account:'
+echo -n 'Enter your account: '
 read account
+
+set -x
 
 <<Initialize the client>>
 ```
@@ -252,7 +285,12 @@ set -eux
 ```
 
 ###### file:bin/load-variable-plus-host-policy
+```bash
+#!/usr/bin/env bash
+set -eux
 
+<<Load variable+host policy>>
+```
 
 ###### file:bin/store-secret
 ```bash

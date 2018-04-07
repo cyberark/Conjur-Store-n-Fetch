@@ -1,11 +1,16 @@
-/host.json
 *.DS_Store
+*.pem
+/.conjurrc
 /.knot_files
+/.netrc
+/.rnd
 /bin/fetch-secret
 /bin/load-one-variable-policy
+/bin/load-variable-plus-host-policy
 /bin/login-as-machine
 /bin/start
 /bin/store-secret
 /docker-compose.yml
 /one-variable.yml
+/roles.json
 /variable-and-host.yml
