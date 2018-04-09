@@ -23,9 +23,8 @@ This tutorial has a few prerequisites. They are:
 1. A terminal application. [Hyper](https://hyper.is/) is a nice one.
 2. The Docker CE package. Visit the [Docker website][docker-ce] and scroll down
    to find the download for your operating system.
-3. An account on the CyberArk Conjur Evaluation service.
-
-Sign up here: (PLACEHOLDER: embed widget for creating an account)
+3. The `jq` JSON processor. Download from [its website][jq].
+3. An account on the CyberArk Conjur Evaluation service. Sign up here: (PLACEHOLDER: embed widget for creating an account)
 
 [docker-ce]: https://www.docker.com/community-edition
 [jq]: https://stedolan.github.io/jq/download/
@@ -39,7 +38,7 @@ mkdir conjur-eval
 cd conjur-eval
 ```
 
-Then [download `docker-compose.yml`][docker-compose.yml] and put it in the
+Then download [`docker-compose.yml`][docker-compose.yml] and put it in the
 folder.
 
 ###### file:docker-compose.yml
@@ -53,7 +52,7 @@ services:
       - ./:/root
 ```
 
-[docker-compose.yml]: https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/v1-pre/docker-compose.yml
+[docker-compose.yml]: https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/1.0/docker-compose.yml
 
 To connect to your account, use the email you provided and the API key you
 created:
@@ -97,6 +96,8 @@ This policy creates a single varible called `eval/secret`. Download
     - !variable secret
 
 ```
+
+[one-variable.yml]: https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/1.0/one-variable.yml
 
 According to this policy, only the Conjur admin should be able to update the
 value of our secret.
@@ -155,7 +156,8 @@ identity to represent your code and let it authenticate to fetch secrets.
 
 Like before, we need a policy that defines a role for our machine. Unlike
 before, we're going to define a relationship between a role (the machine) and a
-resource (the variable):
+resource (the variable). Download [variable-and-host.yml][variable-and-host.yml]
+and put it in your folder.
 
 ###### file:variable-and-host.yml
 ```yaml
@@ -174,8 +176,9 @@ resource (the variable):
 
 ```
 
-Download [variable-and-host.yml][variable-and-host.yml] and put it in your
-folder. Then let's load it:
+[variable-and-host.yml]: https://github.com/ryanprior/Conjur-Store-n-Fetch/releases/download/1.0/variable-and-host.yml
+
+Now let's load it:
 
 ###### Load variable+host policy
 ```bash
