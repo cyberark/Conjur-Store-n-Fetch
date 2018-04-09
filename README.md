@@ -24,7 +24,8 @@ This tutorial has a few prerequisites. They are:
 2. The Docker CE package. Visit the [Docker website][docker-ce] and scroll down
    to find the download for your operating system.
 3. The `jq` JSON processor. Download from [its website][jq].
-3. An account on the CyberArk Conjur Evaluation service. Sign up here: (PLACEHOLDER: embed widget for creating an account)
+3. An account on the CyberArk Conjur Evaluation service. Sign up [on
+   Conjur.org](https://www.conjur.org/get-started/try-conjur.html)
 
 [docker-ce]: https://www.docker.com/community-edition
 [jq]: https://stedolan.github.io/jq/download/
