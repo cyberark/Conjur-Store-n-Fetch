@@ -87,7 +87,7 @@ there.
 ### Loading a policy
 
 This policy creates a single varible called `eval/secret`. Download
-[one-variable.yml][one-variable.yml] and put it in your folder.
+[`one-variable.yml`][one-variable.yml] and put it in your folder.
 
 ###### file:one-variable.yml
 ```yaml
@@ -157,7 +157,7 @@ identity to represent your code and let it authenticate to fetch secrets.
 
 Like before, we need a policy that defines a role for our machine. Unlike
 before, we're going to define a relationship between a role (the machine) and a
-resource (the variable). Download [variable-and-host.yml][variable-and-host.yml]
+resource (the variable). Download [`variable-and-host.yml`][variable-and-host.yml]
 and put it in your folder.
 
 ###### file:variable-and-host.yml
